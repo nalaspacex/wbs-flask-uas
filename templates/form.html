@@ -3,32 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whistleblowing System Sederhana</title>
+    <title>Hogwarts Whistleblowing System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Special+Elite&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: Arial, sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; }
-        form { background: #f4f4f4; padding: 20px; border-radius: 8px; }
-        .group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        select, textarea, button { width: 100%; padding: 10px; box-sizing: border-box; }
-        button { background: #28a745; color: white; border: none; font-size: 16px; cursor: pointer; }
+        body { 
+            background-color: #1a0f0f; /* Latar belakang gelap magis */
+            background-image: radial-gradient(rgba(26, 15, 15, 0.8), #090505);
+            font-family: 'Special Elite', monospace; 
+            max-width: 550px; 
+            margin: 40px auto; 
+            padding: 20px; 
+            color: #dec897; /* Warna teks emas tua */
+        }
+        h2 {
+            font-family: 'Cinzel', serif;
+            text-align: center;
+            color: #d3a625; /* Emas Gryffindor */
+            text-shadow: 2px 2px 4px #000;
+            letter-spacing: 2px;
+        }
+        form { 
+            background: #f2e6ce; /* Warna kertas perkamen tua */
+            padding: 30px; 
+            border-radius: 4px; 
+            border: 3px double #740001; /* Bingkai merah tua Gryffindor */
+            box-shadow: 0px 0px 20px rgba(211, 166, 37, 0.2);
+            color: #2b1d0c; /* Teks di dalam form berwarna cokelat tinta */
+        }
+        .group { margin-bottom: 20px; }
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: bold; 
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            color: #740001;
+        }
+        select, textarea { 
+            width: 100%; 
+            padding: 12px; 
+            box-sizing: border-box; 
+            background: #fffbf2;
+            border: 1px solid #b3935d;
+            font-family: 'Special Elite', monospace;
+            font-size: 15px;
+            border-radius: 3px;
+        }
+        select:focus, textarea:focus {
+            outline: 2px solid #d3a625;
+        }
+        button { 
+            width: 100%;
+            padding: 15px;
+            background: #740001; /* Merah Gryffindor */
+            color: #d3a625; /* Emas Gryffindor */
+            border: 2px solid #d3a625; 
+            font-size: 16px; 
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            cursor: pointer; 
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        button:hover { 
+            background: #d3a625; 
+            color: #740001; 
+            border: 2px solid #740001;
+            box-shadow: 0px 0px 15px #d3a625;
+        }
+        .footer-note {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 25px;
+            color: #8c764d;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
-    <h2>Form Pengaduan Anonim (UAS)</h2>
+    <h2>⚡ Ministry of Magic ⚡<br>Whistleblowing System</h2>
     <form action="/" method="POST">
         <div class="group">
-            <label for="kategori">Kategori Pelanggaran:</label>
+            <label for="kategori">Kategori Pelanggaran Sihir:</label>
             <select name="kategori" id="kategori">
-                <option value="Fasilitas">Penyalahgunaan Fasilitas</option>
-                <option value="Pungli">Pungutan Liar</option>
-                <option value="Lainnya">Lainnya</option>
+                <option value="Sihir Hitam">Penyalahgunaan Sihir Hitam (Dark Arts)</option>
+                <option value="Muggle">Pelanggaran Kerahasiaan di Depan Muggle</option>
+                <option value="Korupsi">Korupsi Kementerian Sihir</option>
             </select>
         </div>
         <div class="group">
-            <label for="laporan">Isi Laporan:</label>
-            <textarea name="laporan" id="laporan" rows="5" required placeholder="Ketik laporan Anda di sini..."></textarea>
+            <label for="laporan">Isi Laporan Anonim (Surat Kaleng):</label>
+            <textarea name="laporan" id="laporan" rows="6" required placeholder="Tuliskan kronologi kejadian atau penggunaan mantra terlarang di sini..."></textarea>
         </div>
-        <button type="submit">Kirim Laporan</button>
+        <button type="submit">Kirim via Burung Hantu 🦉</button>
     </form>
+    <div class="footer-note">"I solemnly swear that I am up to no good"</div>
 </body>
 </html>
