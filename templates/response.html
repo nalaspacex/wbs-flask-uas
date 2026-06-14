@@ -73,10 +73,10 @@
 </head>
 <body>
     <div class="parchment-box">
-        <h3>✉️ Lembar Kendali Kriptografi UAS</h3>
-        <p style="text-align: center; font-size: 14px;">Aduan sukses diverifikasi oleh sistem anonim berbasis <strong>AES-128 (Fernet)</strong>.</p>
+        <h3>✉️ Lembar Kendali Pelaporan</h3>
+        <p style="text-align: center; font-size: 14px;">Aduan sukses diverifikasi oleh sistem berbasis <strong>AES-128 (Fernet)</strong>.</p>
         
-        <div class="data-label">Nama Profesor / Dosen Terlapor:</div>
+        <div class="data-label">Nama Dosen Terlapor:</div>
         <div class="data-value">{{ nama_dosen }}</div>
 
         <div class="data-label">Mata Kuliah:</div>
@@ -93,9 +93,6 @@
 
             <div class="data-label" style="color: #740001;">[Tahap 2] Hasil Enkripsi di Database (Ciphertext):</div>
             <div class="data-value crypto-secure">{{ laporan_terenkripsi }}</div>
-
-            <div class="data-label" style="color: #28a745;">[Tahap 3] Hasil Dekripsi Otoritas (Decrypted Plaintext):</div>
-            <div class="data-value crypto-success">{{ laporan_dekripsi }}</div>
         </div>
 
     </div>
