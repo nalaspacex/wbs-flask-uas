@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Laporan Terkirim</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #0f172a; color: #f8fafc; text-align: center; padding-top: 100px; }
+        .card { max-width: 500px; margin: 0 auto; background: #1e293b; padding: 40px; border-radius: 12px; border: 1px solid #334155; }
+        h2 { color: #22c55e; }
+        .code-box { background: #0f172a; padding: 15px; border-radius: 6px; font-family: monospace; color: #f43f5e; margin: 20px 0; word-break: break-all;}
+        a { color: #38bdf8; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Laporan Sukses Dikirim! 🚀</h2>
+        <p>Identitas Anda tersembunyi. Sistem berhasil mengamankan aduan Anda ke kategori: <strong>{{ kategori }}</strong></p>
+        <p>Teks yang tersimpan di dalam database berubah menjadi:</p>
+        <div class="code-box">{{ laporan_secure }}</div>
+        <br>
+        <a href="/">← Kembali ke Dashboard</a>
+    </div>
+</body>
+</html>
