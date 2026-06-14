@@ -17,59 +17,62 @@ def init_db():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS aduan (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nim_terenkripsi TEXT NOT NULL,
             nama_dosen TEXT NOT NULL,
             matkul TEXT NOT NULL,
             kategori TEXT NOT NULL,
+            nim_terenkripsi TEXT NOT NULL,
             laporan_terenkripsi TEXT NOT NULL
         )
     ''')
     conn.commit()
     conn.close()
 
-# Jalankan inisialisasi database
 init_db()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        nim_asli = request.form.get('nim_mahasiswa')
-        nama_dosen = request.form.get('nama_dosen')
-        matkul = request.form.get('matkul')
-        kategori = request.form.get('kategori')
-        kronologi_asli = request.form.get('kronologi')
+        # Menggunakan cadangan string kosong "" jika form mengirimkan None
+        nama_dosen = request.form.get('nama_dosen', '')
+        matkul = request.form.get('matkul', '')
+        kategori = request.form.get('kategori', '')
+        nim_asli = request.form.get('nim_mahasiswa', '')
+        kronologi_asli = request.form.get('kronologi', '')
         
         try:
-            # === PROSES 1: ENKRIPSI ===
+            # === 🔮 PROSES KRIPTOGRAFI: ENKRIPSI ===
             enc_nim = fernet.encrypt(nim_asli.encode('utf-8')).decode('utf-8')
             enc_kronologi = fernet.encrypt(kronologi_asli.encode('utf-8')).decode('utf-8')
             
-            # SIMPAN KE DATABASE
+            # SIMPAN DATA KE DATABASE
             conn = sqlite3.connect(DB_FILE)
             cursor = conn.cursor()
             cursor.execute('''
-                INSERT INTO aduan (enc_nim, nama_dosen, matkul, kategori, enc_kronologi)
+                INSERT INTO aduan (nama_dosen, matkul, kategori, nim_terenkripsi, laporan_terenkripsi)
                 VALUES (?, ?, ?, ?, ?)
-            ''', (enc_nim, nama_dosen, matkul, kategori, enc_kronologi))
+            ''', (nama_dosen, matkul, kategori, enc_nim, enc_kronologi))
             conn.commit()
             conn.close()
             
-            # === PROSES 2: DEKRIPSI ===
+            # === 🔮 PROSES KRIPTOGRAFI: DEKRIPSI ===
             dec_nim = fernet.decrypt(enc_nim.encode('utf-8')).decode('utf-8')
             dec_kronologi = fernet.decrypt(enc_kronologi.encode('utf-8')).decode('utf-8')
             
         except Exception as e:
-            # MEMPERBAIKI BUG UNBOUNDLOCALERROR
+            # Jika tetap gagal, tampilkan detail pesan error asli dari compiler Python
             enc_nim = f"[Gagal Enkripsi NIM: {str(e)}]"
             enc_kronologi = f"[Gagal Enkripsi Laporan: {str(e)}]"
             dec_nim = "[Gagal Dekripsi]"
             dec_kronologi = "[Gagal Dekripsi]"
 
         return render_template('response.html', 
-                               nim_terenkripsi=enc_nim,
                                nama_dosen=nama_dosen, 
                                matkul=matkul, 
                                kategori=kategori, 
+                               nim_asli=nim_asli,
+                               nim_terenkripsi=enc_nim,
+                               nim_dekripsi=dec_nim,
+                               laporan_asli=kronologi_asli,
                                laporan_terenkripsi=enc_kronologi,
                                laporan_dekripsi=dec_kronologi)
     
