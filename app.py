@@ -17,6 +17,7 @@ def init_db():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS aduan (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nim_terenkripsi TEXT NOT NULL,
             nama_dosen TEXT NOT NULL,
             matkul TEXT NOT NULL,
             kategori TEXT NOT NULL,
@@ -32,6 +33,7 @@ init_db()
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
+        nim_asli = request.form.get('nim_mahasiswa')
         nama_dosen = request.form.get('nama_dosen')
         matkul = request.form.get('matkul')
         kategori = request.form.get('kategori')
@@ -39,35 +41,37 @@ def index():
         
         try:
             # === PROSES 1: ENKRIPSI ===
-            plaintext_bytes = kronologi_asli.encode('utf-8')
-            ciphertext_bytes = fernet.encrypt(plaintext_bytes)
-            kronologi_terenkripsi = ciphertext_bytes.decode('utf-8')
+            enc_nim = fernet.encrypt(nim_asli.encode('utf-8')).decode('utf-8')
+            enc_kronologi = fernet.encrypt(kronologi_asli.encode('utf-8')).decode('utf-8')
             
             # SIMPAN KE DATABASE
             conn = sqlite3.connect(DB_FILE)
             cursor = conn.cursor()
             cursor.execute('''
-                INSERT INTO aduan (nama_dosen, matkul, kategori, laporan_terenkripsi)
-                VALUES (?, ?, ?, ?)
-            ''', (nama_dosen, matkul, kategori, kronologi_terenkripsi))
+                INSERT INTO aduan (enc_nim, nama_dosen, matkul, kategori, enc_kronologi)
+                VALUES (?, ?, ?, ?, ?)
+            ''', (enc_nim, nama_dosen, matkul, kategori, enc_kronologi))
             conn.commit()
             conn.close()
             
             # === PROSES 2: DEKRIPSI ===
-            decrypted_bytes = fernet.decrypt(ciphertext_bytes)
-            kronologi_dekripsi = decrypted_bytes.decode('utf-8')
+            dec_nim = fernet.decrypt(enc_nim.encode('utf-8')).decode('utf-8')
+            dec_kronologi = fernet.decrypt(enc_kronologi.encode('utf-8')).decode('utf-8')
             
         except Exception as e:
-            kronologi_terenkripsi = f"[Gagal Enkripsi: {str(e)}]"
-            kronologi_dekripsi = "[Gagal Dekripsi]"
+            # MEMPERBAIKI BUG UNBOUNDLOCALERROR
+            enc_nim = f"[Gagal Enkripsi NIM: {str(e)}]"
+            enc_kronologi = f"[Gagal Enkripsi Laporan: {str(e)}]"
+            dec_nim = "[Gagal Dekripsi]"
+            dec_kronologi = "[Gagal Dekripsi]"
 
         return render_template('response.html', 
+                               nim_terenkripsi=enc_nim,
                                nama_dosen=nama_dosen, 
                                matkul=matkul, 
                                kategori=kategori, 
-                               laporan_asli=kronologi_asli,
-                               laporan_terenkripsi=kronologi_terenkripsi,
-                               laporan_dekripsi=kronologi_dekripsi)
+                               laporan_terenkripsi=enc_kronologi,
+                               laporan_dekripsi=dec_kronologi)
     
     return render_template('form.html')
 
