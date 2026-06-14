@@ -1,54 +1,101 @@
-from flask import Flask, render_template, request
-from cryptography.fernet import Fernet
-import os
-
-app = Flask(__name__, template_folder='templates')
-
-# Kunci statis darurat untuk UAS agar tidak berubah-ubah setiap kali reload server
-# Ini adalah kunci Fernet valid berformat base64 (32 bytes)
-KUNCI_UAS = b'HogwartsSecretKeyForCryptoUAS2026Base64='
-
-try:
-    fernet = Fernet(KUNCI_UAS)
-except Exception:
-    # Jika kunci di atas bermasalah, generate otomatis sebagai cadangan
-    KUNCI_UAS = Fernet.generate_key()
-    fernet = Fernet(KUNCI_UAS)
-
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    if request.method == 'POST':
-        nama_dosen = request.form.get('nama_dosen')
-        matkul = request.form.get('matkul')
-        kategori_pelanggaran = request.form.get('kategori_pelanggaran')
-        kronologi_asli = request.form.get('kronologi') # Plaintext
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hogwarts Academic Whistleblowing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            background-color: #1a0f0f; 
+            background-image: radial-gradient(rgba(26, 15, 15, 0.8), #090505);
+            font-family: 'Special Elite', monospace; 
+            max-width: 550px; 
+            margin: 40px auto; 
+            padding: 20px; 
+            color: #dec897; 
+        }
+        h2 {
+            font-family: 'Cinzel', serif;
+            text-align: center;
+            color: #d3a625; 
+            text-shadow: 2px 2px 4px #000;
+            line-height: 1.4;
+        }
+        form { 
+            background: #f2e6ce; 
+            padding: 30px; 
+            border-radius: 4px; 
+            border: 3px double #740001; 
+            box-shadow: 0px 0px 20px rgba(211, 166, 37, 0.2);
+            color: #2b1d0c; 
+        }
+        .group { margin-bottom: 20px; }
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: bold; 
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            color: #740001;
+        }
+        input, select, textarea { 
+            width: 100%; 
+            padding: 12px; 
+            box-sizing: border-box; 
+            background: #fffbf2;
+            border: 1px solid #b3935d;
+            font-family: 'Special Elite', monospace;
+            font-size: 14px;
+            border-radius: 3px;
+            color: #2b1d0c;
+        }
+        button { 
+            width: 100%;
+            padding: 15px;
+            background: #740001; 
+            color: #d3a625; 
+            border: 2px solid #d3a625; 
+            font-size: 16px; 
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            cursor: pointer; 
+        }
+        button:hover { 
+            background: #d3a625; 
+            color: #740001; 
+        }
+    </style>
+</head>
+<body>
+    <h2>⚡ HOGWARTS ACADEMIC ⚡<br>Whistleblowing System</h2>
+    <form action="/" method="POST">
         
-        try:
-            # === PROSES KRIPTOGRAFI (ENKRIPSI) ===
-            kronologi_bytes = kronologi_asli.encode('utf-8')
-            ciphertext_bytes = fernet.encrypt(kronologi_bytes)
-            kronologi_terenkripsi = ciphertext_bytes.decode('utf-8') # Menjadi Ciphertext string
-            
-            # === PROSES KRIPTOGRAFI (DEKRIPSI) ===
-            decrypted_bytes = fernet.decrypt(ciphertext_bytes)
-            kronologi_dekripsi = decrypted_bytes.decode('utf-8')
-            
-        except Exception as e:
-            # Mengamankan sistem agar tidak Internal Server Error jika enkripsi gagal
-            kronologi_terenkripsi = "[Gagal mengenkripsi pesan secara magis]"
-            kronologi_dekripsi = f"[Gagal mendekripsi: {str(e)}]"
+        <div class="group">
+            <label for="nama_dosen">Nama Profesor / Dosen Terlaporkan:</label>
+            <input type="text" id="nama_dosen" name="nama_dosen" required placeholder="Contoh: Prof. Severus Snape">
+        </div>
 
-        # Kirim semua data aman ke halaman respon
-        return render_template('response.html', 
-                               nama_dosen=nama_dosen, 
-                               matkul=matkul, 
-                               kategori=kategori_pelanggaran, 
-                               laporan_asli=kronologi_asli,
-                               laporan_terenkripsi=kronologi_terenkripsi,
-                               laporan_dekripsi=kronologi_dekripsi)
-    
-    return render_template('form.html')
+        <div class="group">
+            <label for="matkul">Mata Kuliah:</label>
+            <input type="text" id="matkul" name="matkul" required placeholder="Contoh: Ramuan Sihir B">
+        </div>
 
-if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+        <div class="group">
+            <label for="kategori">Kategori Indikasi Pelanggaran:</label>
+            <select name="kategori" id="kategori">
+                <option value="Gratifikasi / Pungli Nilai">Gratifikasi / Pungli Nilai</option>
+                <option value="Ketidakadilan Akademik">Ketidakadilan Akademik / Ujian</option>
+                <option value="Penyalahgunaan Wewenang">Penyalahgunaan Wewenang Jabatan</option>
+            </select>
+        </div>
+
+        <div class="group">
+            <label for="kronologi">Kronologi Detail Laporan (Akan Dienkripsi):</label>
+            <textarea id="kronologi" name="kronologi" rows="5" required placeholder="Tuliskan kronologi rahasia Anda di sini..."></textarea>
+        </div>
+
+        <button type="submit">Kirim Surat Kaleng Bersegel 🦉</button>
+    </form>
+</body>
+</html>
