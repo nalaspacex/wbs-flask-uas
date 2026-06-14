@@ -11,8 +11,8 @@
             background-color: #1a0f0f; 
             background-image: radial-gradient(rgba(26, 15, 15, 0.8), #090505);
             font-family: 'Special Elite', monospace; 
-            max-width: 550px; 
-            margin: 50px auto; 
+            max-width: 600px; 
+            margin: 40px auto; 
             padding: 20px; 
             color: #dec897;
             text-align: center;
@@ -48,6 +48,13 @@
             margin-top: 5px;
             font-style: italic;
             word-break: break-all;
+            font-size: 13px;
+        }
+        .crypto-secure {
+            border-left: 3px solid #740001;
+            color: #740001;
+            font-weight: bold;
+            letter-spacing: 0.5px;
         }
         a { 
             display: inline-block; 
@@ -57,18 +64,15 @@
             font-family: 'Cinzel', serif;
             font-weight: bold;
         }
-        a:hover {
-            color: #fff;
-            text-shadow: 0 0 10px #d3a625;
-        }
+        a:hover { color: #fff; text-shadow: 0 0 10px #d3a625; }
     </style>
 </head>
 <body>
     <div class="parchment-box">
-        <h3>✉️ Kesaksian Telah Disegel!</h3>
-        <p>Aduan anonim Anda mengenai kinerja dosen telah terkirim ke Dewan Penilai Akademik tanpa meninggalkan jejak identitas digital Anda.</p>
+        <h3>✉️ Kesaksian Bersegel Kriptografi!</h3>
+        <p>Aduan Anda sukses diproses menggunakan Algoritma **Fernet (AES-128)**.</p>
         
-        <div class="data-label">Profesor / Dosen Terlapor:</div>
+        <div class="data-label">Dosen Terlapor:</div>
         <div class="data-value">{{ nama_dosen }}</div>
 
         <div class="data-label">Mata Kuliah:</div>
@@ -77,8 +81,19 @@
         <div class="data-label">Kategori Pelanggaran:</div>
         <div class="data-value">{{ kategori }}</div>
         
-        <div class="data-label">Isi Laporan Kronologi & Saran:</div>
-        <div class="data-value">{{ laporan }}</div>
+        <div style="margin-top: 25px; border-top: 2px double #b3935d; padding-top: 10px;">
+            <h4 style="font-family: 'Cinzel', serif; text-align: center; color: #740001; margin: 5px 0;">🔮 Audit Kriptografi (UAS)</h4>
+            
+            <div class="data-label">1. Input Asli Mahasiswa (Plaintext):</div>
+            <div class="data-value">{{ laporan_asli }}</div>
+
+            <div class="data-label">2. Kode Terenkripsi di Server (Ciphertext):</div>
+            <div class="data-value crypto-secure">{{ laporan_terenkripsi }}</div>
+
+            <div class="data-label">3. Hasil Dekripsi Admin (Decrypted):</div>
+            <div class="data-value">{{ laporan_dekripsi }}</div>
+        </div>
+
     </div>
     <a href="/">&larr; Kembali ke Form Pengaduan</a>
 </body>
