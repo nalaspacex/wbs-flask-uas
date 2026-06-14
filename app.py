@@ -6,7 +6,7 @@ app = Flask(__name__, template_folder='templates')
 
 # Kunci statis darurat untuk UAS agar tidak berubah-ubah setiap kali reload server
 # Ini adalah kunci Fernet valid berformat base64 (32 bytes)
-KUNCI_UAS = b'⚡HogwartsSecretKeyForCryptographyUAS2026='
+KUNCI_UAS = b'HogwartsSecretKeyForCryptoUAS2026Base64='
 
 try:
     fernet = Fernet(KUNCI_UAS)
