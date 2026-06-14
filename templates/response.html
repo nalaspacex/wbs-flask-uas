@@ -90,10 +90,12 @@
 </head>
 <body>
     <div class="parchment-box">
-        <h3>✉️ Lembar Kendali Pelaporan</h3>
-        <p style="text-align: center; font-size: 13px;">Sistem berhasil memisahkan data klasifikasi umum dengan data rahasia mahasiswa.</p>
+        <h3>✉️ Lembar Kendali Kriptografi UAS</h3>
+        <p style="text-align: center; font-size: 13px; font-weight: bold; color: #740001;">
+            Terima kasih! Sistem berhasil merekam laporan anda.
+        </p>
         
-        <div class="data-label">Nama Dosen:</div>
+        <div class="data-label">Nama Profesor / Dosen Terlapor:</div>
         <div class="data-value">{{ nama_dosen }}</div>
 
         <div class="data-label">Mata Kuliah:</div>
@@ -103,15 +105,14 @@
         <div class="data-value">{{ kategori }}</div>
         
         <div style="margin-top: 25px; border-top: 2px double #b3935d; padding-top: 15px;">
-            <h4 style="font-family: 'Cinzel', serif; text-align: center; color: #740001; margin: 5px 0 15px 0;">🔮 Tabel Audit Enkripsi (AES-128)</h4>
+            <h4 style="font-family: 'Cinzel', serif; text-align: center; color: #740001; margin: 5px 0 15px 0;">🔮 Tabel Bukti Enkripsi (AES-128)</h4>
             
             <table class="crypto-table">
                 <thead>
                     <tr>
-                        <th style="width: 22%;">Komponen Data</th>
-                        <th style="width: 23%;">1. Plaintext Asli</th>
-                        <th style="width: 32%;">2. Ciphertext (Di DB)</th>
-                        <th style="width: 23%;">3. Decrypted (Admin)</th>
+                        <th style="width: 30%;">Komponen Data</th>
+                        <th style="width: 30%;">1. Plaintext Asli</th>
+                        <th style="width: 40%;">2. Ciphertext (Di DB)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -119,13 +120,11 @@
                         <td><strong>NIM Pengirim</strong></td>
                         <td>{{ nim_asli }}</td>
                         <td class="text-secure">{{ nim_terenkripsi }}</td>
-                        <td class="text-success">{{ nim_dekripsi }}</td>
                     </tr>
                     <tr>
                         <td><strong>Kronologi Laporan</strong></td>
                         <td>{{ laporan_asli }}</td>
                         <td class="text-secure">{{ laporan_terenkripsi }}</td>
-                        <td class="text-success">{{ laporan_dekripsi }}</td>
                     </tr>
                 </tbody>
             </table>
