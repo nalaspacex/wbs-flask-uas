@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Dikirim via Burung Hantu</title>
+    <title>Aduan Akademik Dikirim</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Special+Elite&display=swap" rel="stylesheet">
     
     <style>
@@ -25,7 +25,6 @@
             border: 3px double #740001; 
             text-align: left;
             box-shadow: 0px 0px 20px rgba(211, 166, 37, 0.3);
-            position: relative;
         }
         .parchment-box h3 {
             font-family: 'Cinzel', serif;
@@ -35,12 +34,20 @@
             border-bottom: 1px dashed #740001;
             padding-bottom: 10px;
         }
+        .data-label {
+            font-weight: bold;
+            color: #740001;
+            margin-top: 15px;
+            font-size: 13px;
+            font-family: 'Cinzel', serif;
+        }
         .data-value {
             background: #fffbf2;
             padding: 10px;
             border-left: 3px solid #d3a625;
-            margin: 10px 0;
+            margin-top: 5px;
             font-style: italic;
+            word-break: break-all;
         }
         a { 
             display: inline-block; 
@@ -49,7 +56,6 @@
             text-decoration: none; 
             font-family: 'Cinzel', serif;
             font-weight: bold;
-            letter-spacing: 1px;
         }
         a:hover {
             color: #fff;
@@ -59,15 +65,21 @@
 </head>
 <body>
     <div class="parchment-box">
-        <h3>✉️ Laporan Telah Terbang!</h3>
-        <p>Laporan Anda telah disegel secara magis dan sedang diantar oleh Burung Hantu Kementerian menuju tujuan secara rahasia.</p>
+        <h3>✉️ Kesaksian Telah Disegel!</h3>
+        <p>Aduan anonim Anda mengenai kinerja dosen telah terkirim ke Dewan Penilai Akademik tanpa meninggalkan jejak identitas digital Anda.</p>
         
-        <p><strong>Kategori Kasus:</strong></p>
+        <div class="data-label">Profesor / Dosen Terlapor:</div>
+        <div class="data-value">{{ nama_dosen }}</div>
+
+        <div class="data-label">Mata Kuliah:</div>
+        <div class="data-value">{{ matkul }}</div>
+
+        <div class="data-label">Kategori Pelanggaran:</div>
         <div class="data-value">{{ kategori }}</div>
         
-        <p><strong>Isi Surat Aduan:</strong></p>
+        <div class="data-label">Isi Laporan Kronologi & Saran:</div>
         <div class="data-value">{{ laporan }}</div>
     </div>
-    <a href="/">&larr; Kirim Surat Aduan Lain</a>
+    <a href="/">&larr; Kembali ke Form Pengaduan</a>
 </body>
 </html>
