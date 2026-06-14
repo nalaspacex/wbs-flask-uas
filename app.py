@@ -5,7 +5,7 @@ import os
 app = Flask(__name__, template_folder='templates')
 
 # Menggunakan kunci base64 statis yang valid untuk Fernet (32-bytes)
-KUNCI_RAHASIA = b'HogwartsSecretKeyForCryptoUAS2026Base64='
+KUNCI_RAHASIA = b'dGVzdGtleWZvcmZlcm5ldGVuY3J5cHRpb25kZW1vMjAyNg=='
 fernet = Fernet(KUNCI_RAHASIA)
 
 @app.route('/', methods=['GET', 'POST'])
