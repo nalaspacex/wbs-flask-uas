@@ -6,128 +6,116 @@
     <title>MIU Whistleblowing</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
-        /* Base Styling & Animasi Latar Belakang Bergerak */
+        /* Menggunakan Gambar Pilihanmu Sebagai Latar Belakang Penuh */
         body { 
-            background: linear-gradient(135deg, #2b060a 25%, #4a1017 50%, #1a0305 100%);
-            background-size: 400% 400%;
-            animation: gradientMove 15s ease infinite;
+            background: url('/static/background.jpg') no-repeat center center fixed;
+            background-size: cover;
             font-family: 'Special Elite', monospace; 
-            max-width: 550px; 
-            margin: 40px auto; 
-            padding: 20px; 
+            margin: 0;
+            padding: 0;
             color: #dec897; 
-            overflow-x: hidden;
-            position: relative;
+            min-height: 100vh;
+            display: table;
+            width: 100%;
         }
 
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* Container Pembungkus Utama */
+        .main-container {
+            display: table-cell;
+            vertical-align: middle;
+            padding: 40px 60px;
         }
 
-        /* Partikel Sihir Mengambang di Latar Belakang */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: radial-gradient(rgba(211, 166, 37, 0.15) 1px, transparent 0);
-            background-size: 24px 24px;
-            animation: floatingMagic 20s linear infinite;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        @keyframes floatingMagic {
-            from { transform: translateY(0); }
-            to { transform: translateY(-100% + 24px); }
+        /* Menggeser Judul dan Form Secara Total ke Sisi Kanan */
+        .content-wrapper {
+            margin-left: auto;
+            margin-right: 40px;
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
         }
 
         h2 {
             font-family: 'Cinzel', serif;
             text-align: center;
             color: #d3a625; 
-            text-shadow: 3px 3px 6px #000, 0 0 15px rgba(211, 166, 37, 0.6);
-            margin-bottom: 30px;
+            text-shadow: 3px 3px 8px #000, 0 0 15px rgba(211, 166, 37, 0.7);
+            margin-bottom: 25px;
+            font-size: 20px;
         }
 
-        /* Desain Form Efek Kartu 3D Mengambang */
+        /* Desain Form Efek Kartu 3D Mengambang di Sebelah Kanan */
         form { 
-            background: #f2e6ce; 
+            background: rgba(242, 230, 206, 0.92); /* Sedikit transparan agar background menyatu */
             padding: 30px; 
             border-radius: 8px; 
             border: 3px double #740001; 
-            box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.6), 0px 0px 25px rgba(211, 166, 37, 0.15);
+            box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.7), 0px 0px 25px rgba(211, 166, 37, 0.2);
             color: #2b1d0c; 
-            transform: perspective(1000px) rotateX(2deg);
+            transform: perspective(1000px) rotateY(-3deg);
             transition: transform 0.5s ease, box-shadow 0.5s ease;
         }
 
         /* Efek Interaksi 3D saat Kursor Mendekat */
         form:hover {
-            transform: perspective(1000px) rotateX(0deg) translateY(-5px);
-            box-shadow: 0px 25px 50px rgba(0, 0, 0, 0.8), 0px 0px 35px rgba(211, 166, 37, 0.3);
+            transform: perspective(1000px) rotateY(0deg) translateY(-5px);
+            box-shadow: 0px 30px 60px rgba(0, 0, 0, 0.9), 0px 0px 35px rgba(211, 166, 37, 0.4);
         }
 
-        .group { margin-bottom: 20px; }
+        .group { margin-bottom: 18px; }
         
         label { 
             display: block; 
-            margin-bottom: 8px; 
+            margin-bottom: 6px; 
             font-weight: bold; 
             font-family: 'Cinzel', serif;
-            font-size: 13px;
+            font-size: 12px;
             color: #740001;
-            text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
         }
 
         input, select, textarea { 
             width: 100%; 
-            padding: 12px; 
+            padding: 11px; 
             box-sizing: border-box; 
             background: #fffbf2;
             border: 1px solid #b3935d;
             font-family: 'Special Elite', monospace;
-            font-size: 14px;
+            font-size: 13px;
             border-radius: 4px;
             color: #2b1d0c;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
         }
 
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #740001;
-            box-shadow: 0 0 8px rgba(116, 0, 1, 0.4), inset 0 2px 4px rgba(0,0,0,0.1);
             background: #ffffff;
+            box-shadow: 0 0 8px rgba(116, 0, 1, 0.4);
         }
 
         .crypto-divider {
             border-top: 2px dashed #740001;
-            margin: 25px 0 15px 0;
-            padding-top: 10px;
+            margin: 20px 0 15px 0;
+            padding-top: 8px;
             text-align: center;
             font-family: 'Cinzel', serif;
             color: #740001;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
-            letter-spacing: 1px;
         }
 
-        /* Tombol Sihir Interaktif */
         button { 
             width: 100%;
-            padding: 15px;
+            padding: 14px;
             background: linear-gradient(135deg, #740001 0%, #9e1316 100%);
             color: #d3a625; 
             border: 2px solid #d3a625; 
-            font-size: 16px; 
+            font-size: 15px; 
             font-family: 'Cinzel', serif;
             font-weight: bold;
             cursor: pointer; 
             border-radius: 4px;
             text-shadow: 1px 1px 2px #000;
-            box-shadow: 0 5px 15px rgba(116, 0, 1, 0.4);
+            box-shadow: 0 5px 15px rgba(116, 0, 1, 0.3);
             transition: all 0.3s ease;
         }
 
@@ -135,52 +123,51 @@
             background: linear-gradient(135deg, #d3a625 0%, #f1cc63 100%);
             color: #740001; 
             border-color: #740001;
-            text-shadow: none;
-            box-shadow: 0 5px 20px rgba(211, 166, 37, 0.6);
+            box-shadow: 0 5px 20px rgba(211, 166, 37, 0.5);
             transform: translateY(-2px);
-        }
-        
-        button:active {
-            transform: translateY(1px);
         }
     </style>
 </head>
 <body>
-    <h2>⚡ MATHEMATICS ⚡<br>Whistleblowing System</h2>
-    <form action="/" method="POST">
-        
-        <div class="group">
-            <label for="nim_mahasiswa">🔒 NIM Anda (Akan Dienkripsi AES):</label>
-            <input type="text" id="nim_mahasiswa" name="nim_mahasiswa" required placeholder="Contoh: 2200101034">
+    <div class="main-container">
+        <div class="content-wrapper">
+            <h2>⚡ MATHEMATICS ⚡<br>Whistleblowing System</h2>
+            <form action="/" method="POST">
+                
+                <div class="group">
+                    <label for="nim_mahasiswa">🔒 NIM Anda (Akan Dienkripsi AES):</label>
+                    <input type="text" id="nim_mahasiswa" name="nim_mahasiswa" required placeholder="Contoh: 2200101034">
+                </div>
+
+                <div class="crypto-divider">📋 Data Objek yang Dilaporkan</div>
+
+                <div class="group">
+                    <label for="nama_dosen">Nama Profesor / Dosen Terlaporkan:</label>
+                    <input type="text" id="nama_dosen" name="nama_dosen" required placeholder="Contoh: Prof. Severus Snape">
+                </div>
+
+                <div class="group">
+                    <label for="matkul">Mata Kuliah:</label>
+                    <input type="text" id="matkul" name="matkul" required placeholder="Contoh: Ramuan Sihir B">
+                </div>
+
+                <div class="group">
+                    <label for="kategori">Kategori Indikasi Pelanggaran:</label>
+                    <select name="kategori" id="kategori">
+                        <option value="Gratifikasi / Pungli Nilai">Gratifikasi / Pungli Nilai</option>
+                        <option value="Ketidakadilan Akademik">Ketidakadilan Akademik / Ujian</option>
+                        <option value="Penyalahgunaan Wewenang">Penyalahgunaan Wewenang Jabatan</option>
+                    </select>
+                </div>
+
+                <div class="group">
+                    <label for="kronologi">🔒 Kronologi Detail Laporan (Akan Dienkripsi AES):</label>
+                    <textarea id="kronologi" name="kronologi" rows="4" required placeholder="Tuliskan kronologi pelanggaran rahasia di sini..."></textarea>
+                </div>
+
+                <button type="submit">Kirim Surat Kaleng Bersegel 🦉</button>
+            </form>
         </div>
-
-        <div class="crypto-divider">📋 Data Objek yang Dilaporkan</div>
-
-        <div class="group">
-            <label for="nama_dosen">Nama Profesor / Dosen Terlaporkan:</label>
-            <input type="text" id="nama_dosen" name="nama_dosen" required placeholder="Contoh: Prof. Severus Snape">
-        </div>
-
-        <div class="group">
-            <label for="matkul">Mata Kuliah:</label>
-            <input type="text" id="matkul" name="matkul" required placeholder="Contoh: Ramuan Sihir B">
-        </div>
-
-        <div class="group">
-            <label for="kategori">Kategori Indikasi Pelanggaran:</label>
-            <select name="kategori" id="kategori">
-                <option value="Gratifikasi / Pungli Nilai">Gratifikasi / Pungli Nilai</option>
-                <option value="Ketidakadilan Akademik">Ketidakadilan Akademik / Ujian</option>
-                <option value="Penyalahgunaan Wewenang">Penyalahgunaan Wewenang Jabatan</option>
-            </select>
-        </div>
-
-        <div class="group">
-            <label for="kronologi">🔒 Kronologi Detail Laporan (Akan Dienkripsi AES):</label>
-            <textarea id="kronologi" name="kronologi" rows="4" required placeholder="Tuliskan kronologi pelanggaran rahasia di sini..."></textarea>
-        </div>
-
-        <button type="submit">Kirim Surat Kaleng Bersegel 🦉</button>
-    </form>
+    </div>
 </body>
 </html>

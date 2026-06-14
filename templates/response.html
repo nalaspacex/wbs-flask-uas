@@ -7,23 +7,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
         body { 
-            background-color: #1a0f0f; 
-            background-image: radial-gradient(rgba(26, 15, 15, 0.8), #090505);
+            background: url('/static/background.jpg') no-repeat center center fixed;
+            background-size: cover;
             font-family: 'Special Elite', monospace; 
-            max-width: 600px; 
+            max-width: 650px; 
             margin: 40px auto; 
             padding: 20px; 
             color: #dec897;
             text-align: center;
         }
         .parchment-box { 
-            background: #f2e6ce; 
+            background: rgba(242, 230, 206, 0.95); 
             color: #2b1d0c; 
             padding: 35px; 
-            border-radius: 4px; 
+            border-radius: 8px; 
             border: 3px double #740001; 
             text-align: left;
-            box-shadow: 0px 0px 20px rgba(211, 166, 37, 0.3);
+            box-shadow: 0px 15px 35px rgba(0,0,0,0.7);
         }
         .parchment-box h3 {
             font-family: 'Cinzel', serif;
@@ -36,28 +36,44 @@
         .data-label {
             font-weight: bold;
             color: #740001;
-            margin-top: 15px;
+            margin-top: 12px;
             font-size: 13px;
             font-family: 'Cinzel', serif;
         }
         .data-value {
             background: #fffbf2;
-            padding: 10px;
+            padding: 8px 12px;
             border-left: 3px solid #d3a625;
-            margin-top: 5px;
+            margin-top: 4px;
             font-style: italic;
             word-break: break-all;
             font-size: 13px;
         }
-        .crypto-secure {
-            border-left: 3px solid #740001;
+        .crypto-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 11px;
+        }
+        .crypto-table th, .crypto-table td {
+            border: 1px solid #b3935d;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .crypto-table th {
+            background: #740001;
+            color: #d3a625;
+            font-family: 'Cinzel', serif;
+        }
+        .text-secure {
             color: #a31515;
             font-weight: bold;
             font-family: monospace;
             background: #fce8e6;
+            word-break: break-all;
         }
-        .crypto-success {
-            border-left: 3px solid #28a745;
+        .text-success {
             color: #155724;
             background: #d4edda;
         }
@@ -68,15 +84,16 @@
             text-decoration: none; 
             font-family: 'Cinzel', serif;
             font-weight: bold;
+            text-shadow: 2px 2px 4px #000;
         }
     </style>
 </head>
 <body>
     <div class="parchment-box">
-        <h3>✉️ Lembar Kendali Pelaporan</h3>
-        <p style="text-align: center; font-size: 14px;">Aduan sukses diverifikasi oleh sistem berbasis <strong>AES-128 (Fernet)</strong>.</p>
+        <h3>✉️ Lembar Kendali Kriptografi UAS</h3>
+        <p style="text-align: center; font-size: 13px;">Sistem berhasil memisahkan data klasifikasi umum dengan data rahasia mahasiswa.</p>
         
-        <div class="data-label">Nama Dosen Terlapor:</div>
+        <div class="data-label">Nama Profesor / Dosen Terlapor:</div>
         <div class="data-value">{{ nama_dosen }}</div>
 
         <div class="data-label">Mata Kuliah:</div>
@@ -86,13 +103,32 @@
         <div class="data-value">{{ kategori }}</div>
         
         <div style="margin-top: 25px; border-top: 2px double #b3935d; padding-top: 15px;">
-            <h4 style="font-family: 'Cinzel', serif; text-align: center; color: #740001; margin: 5px 0;">🔮 Data Laporan</h4>
+            <h4 style="font-family: 'Cinzel', serif; text-align: center; color: #740001; margin: 5px 0 15px 0;">🔮 Tabel Audit Enkripsi (AES-128)</h4>
             
-            <div class="data-label" style="color: #555;">Input Asli Mahasiswa (Plaintext):</div>
-            <div class="data-value">{{ laporan_asli }}</div>
-
-            <div class="data-label" style="color: #740001;">Hasil Enkripsi di Database (Ciphertext):</div>
-            <div class="data-value crypto-secure">{{ laporan_terenkripsi }}</div>
+            <table class="crypto-table">
+                <thead>
+                    <tr>
+                        <th style="width: 22%;">Komponen Data</th>
+                        <th style="width: 23%;">1. Plaintext Asli</th>
+                        <th style="width: 32%;">2. Ciphertext (Di DB)</th>
+                        <th style="width: 23%;">3. Decrypted (Admin)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>NIM Pengirim</strong></td>
+                        <td>{{ nim_asli }}</td>
+                        <td class="text-secure">{{ nim_terenkripsi }}</td>
+                        <td class="text-success">{{ nim_dekripsi }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kronologi Laporan</strong></td>
+                        <td>{{ laporan_asli }}</td>
+                        <td class="text-secure">{{ laporan_terenkripsi }}</td>
+                        <td class="text-success">{{ laporan_dekripsi }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
     </div>
