@@ -3,7 +3,7 @@ import sqlite3
 import os
 from cryptography.fernet import Fernet
 
-app = Flask(__name__, template_folder='templates'))
+app = Flask(__name__, template_folder='templates')
 DB_FILE = "wbs_database.db"
 
 KEY = b'6f_XW-X9bX-8p7J7z987Vv3V_vZ7777777777777778='
