@@ -51,13 +51,13 @@ def index():
         
         return render_template('response.html', kategori=kategori, laporan_secure=laporan_secure)
 
-    conn = sqlite3.connect(DB_FILE)
-    cursor = conn.cursor()
-    cursor.execute("SELECT id, kategori, laporan_terenkripsi, waktu FROM aduan ORDER BY id DESC")
-    daftar_aduan = cursor.fetchall()
-    conn.close()
+conn = sqlite3.connect(DB_FILE)
+cursor = conn.cursor()
+cursor.execute("SELECT id, kategori, laporan_terenkripsi, waktu FROM aduan ORDER BY id DESC")
+daftar_aduan = cursor.fetchall()
+conn.close()
     
-    return render_template('form.html', aduan_data=daftar_aduan)
+return render_template('form.html', aduan_data=daftar_aduan)
 
 if __name__ == '__main__':
     init_db()
