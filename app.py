@@ -1,37 +1,59 @@
 from flask import Flask, render_template, request
 from cryptography.fernet import Fernet
+import sqlite3
 import os
 
 app = Flask(__name__, template_folder='templates')
 
-# Menggunakan kunci base64 statis yang valid untuk Fernet (32-bytes)
-KUNCI_RAHASIA = b'HogwartsSecretKeyForCryptoUAS2026Base64='
+# Kunci Fernet valid 32-bytes Base64
+KUNCI_RAHASIA = b'6fX59pW8Z9_n3NvZ7Wd1Y5_K6e1S_M2b3C4d5E6f7G8='
 fernet = Fernet(KUNCI_RAHASIA)
+
+DB_FILE = 'database_aduan.db'
+
+def init_db():
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS aduan (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nama_dosen TEXT NOT NULL,
+            matkul TEXT NOT NULL,
+            kategori TEXT NOT NULL,
+            laporan_terenkripsi TEXT NOT NULL
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+# Jalankan inisialisasi database
+init_db()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        # Mengambil input dari form (Pastikan key sesuai dengan atribut 'name' di HTML)
         nama_dosen = request.form.get('nama_dosen')
         matkul = request.form.get('matkul')
         kategori = request.form.get('kategori')
         kronologi_asli = request.form.get('kronologi')
         
         try:
-            # ====================================================
-            # 🔮 PROSES KRIPTOGRAFI 1: ENKRIPSI (Plaintext -> Ciphertext)
-            # ====================================================
-            # Teks asli (string) diubah ke bentuk bytes dengan encoding UTF-8
+            # === PROSES 1: ENKRIPSI ===
             plaintext_bytes = kronologi_asli.encode('utf-8')
-            # Proses pengacakan menggunakan algoritma AES-128 via Fernet
             ciphertext_bytes = fernet.encrypt(plaintext_bytes)
-            # Mengubah hasil enkripsi (bytes) kembali ke string agar aman dikirim ke HTML
             kronologi_terenkripsi = ciphertext_bytes.decode('utf-8')
             
-            # ====================================================
-            # 🔮 PROSES KRIPTOGRAFI 2: DEKRIPSI (Ciphertext -> Plaintext)
-            # ====================================================
-            # Memulihkan kembali teks acak menggunakan kunci rahasia yang sama
+            # SIMPAN KE DATABASE
+            conn = sqlite3.connect(DB_FILE)
+            cursor = conn.cursor()
+            cursor.execute('''
+                INSERT INTO aduan (nama_dosen, matkul, kategori, laporan_terenkripsi)
+                VALUES (?, ?, ?, ?)
+            ''', (nama_dosen, matkul, kategori, kronologi_terenkripsi))
+            conn.commit()
+            conn.close()
+            
+            # === PROSES 2: DEKRIPSI ===
             decrypted_bytes = fernet.decrypt(ciphertext_bytes)
             kronologi_dekripsi = decrypted_bytes.decode('utf-8')
             
@@ -39,7 +61,6 @@ def index():
             kronologi_terenkripsi = f"[Gagal Enkripsi: {str(e)}]"
             kronologi_dekripsi = "[Gagal Dekripsi]"
 
-        # Mengirimkan semua data hasil pemrosesan ke halaman response.html
         return render_template('response.html', 
                                nama_dosen=nama_dosen, 
                                matkul=matkul, 
