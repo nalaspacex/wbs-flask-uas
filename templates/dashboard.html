@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Admin - Riwayat Laporan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        body { background: #1a0f0f; font-family: 'Special Elite', monospace; color: #dec897; margin: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #d3a625; padding-bottom: 10px; margin-bottom: 20px; }
+        h2 { font-family: 'Cinzel', serif; color: #d3a625; margin: 0; }
+        .logout-btn { padding: 8px 16px; background: #740001; color: #fff; border: 1px solid #d3a625; text-decoration: none; font-family: 'Cinzel'; font-size: 12px; }
+        .logout-btn:hover { background: #d3a625; color: #740001; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; background: rgba(242, 230, 206, 0.05); }
+        th, td { border: 1px solid #b3935d; padding: 12px; text-align: left; vertical-align: top; }
+        th { background: #740001; color: #d3a625; font-family: 'Cinzel'; }
+        .secure-box { background: #2b1d0c; padding: 5px; font-size: 11px; color: #ffb84d; word-break: break-all; margin-bottom: 5px; border-left: 2px solid #740001; }
+        .plain-box { background: #223a22; padding: 5px; font-size: 13px; color: #85e685; border-left: 2px solid #28a745; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>🔮 Ruang Kendali & Riwayat Pengaduan (Pihak Berwenang)</h2>
+        <a href="/logout" class="logout-btn">Keluar Dashboard</a>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 5%;">ID</th>
+                <th style="width: 20%;">Objek Dilaporkan (Plaintext)</th>
+                <th style="width: 35%;">Data Identitas NIM (Tingkat Keamanan Tinggi)</th>
+                <th style="width: 40%;">Isi Kronologi Aduan (Tingkat Keamanan Tinggi)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for aduan in aduan_list %}
+            <tr>
+                <td>{{ aduan.id }}</td>
+                <td>
+                    <strong>Dosen:</strong> {{ aduan.nama_dosen }}<br>
+                    <strong>Matkul:</strong> {{ aduan.matkul }}<br>
+                    <strong>Kategori:</strong> {{ aduan.kategori }}<br>
+                    <small style="color: #888;">Waktu: {{ aduan.waktu }}</small>
+                </td>
+                <td>
+                    <div class="secure-box"><strong>Ciphertext:</strong> {{ aduan.nim_terenkripsi }}</div>
+                    <div class="plain-box"><strong>Decrypted:</strong> {{ aduan.nim_dekripsi }}</div>
+                </td>
+                <td>
+                    <div class="secure-box"><strong>Ciphertext:</strong> {{ aduan.laporan_terenkripsi }}</div>
+                    <div class="plain-box"><strong>Decrypted:</strong> {{ aduan.laporan_dekripsi }}</div>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" style="text-align: center;">Belum ada riwayat laporan yang masuk ke database.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

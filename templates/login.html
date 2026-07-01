@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login - Hogwarts WBS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        body { background: url('/static/background.jpg') no-repeat center center fixed; background-size: cover; font-family: 'Special Elite', monospace; color: #dec897; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .login-box { background: rgba(38, 20, 22, 0.93); padding: 40px; border-radius: 8px; border: 2px solid #d3a625; width: 100%; max-width: 360px; box-shadow: 0 10px 25px rgba(0,0,0,0.7); text-align: center; }
+        h3 { font-family: 'Cinzel', serif; color: #d3a625; margin-bottom: 25px; }
+        input { width: 100%; padding: 12px; margin-bottom: 15px; box-sizing: border-box; background: #fffbf2; border: 1px solid #b3935d; border-radius: 4px; font-family: 'Special Elite'; }
+        button { width: 100%; padding: 12px; background: #740001; color: #d3a625; border: 1px solid #d3a625; font-family: 'Cinzel'; font-weight: bold; cursor: pointer; border-radius: 4px; }
+        button:hover { background: #d3a625; color: #740001; }
+        .error { color: #ff6b6b; font-size: 13px; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h3>🔑 Otoritas Pihak Berwenang</h3>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="error">{{ messages[0] }}</div>
+          {% endif %}
+        {% endwith %}
+        <form action="/login" method="POST">
+            <input type="text" name="username" placeholder="Username Admin" required>
+            <input type="password" name="password" placeholder="Password Rahasia" required>
+            <button type="submit">Masuk ke Ruang Kepala Sekolah</button>
+        </form>
+    </div>
+</body>
+</html>
