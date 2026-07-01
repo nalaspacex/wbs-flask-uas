@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for, flash
 from cryptography.fernet import Fernet
 import sqlite3
 import os
@@ -72,7 +72,7 @@ def index():
                                nim_asli=nim_asli,
                                nim_terenkripsi=enc_nim,
                                laporan_asli=kronologi_asli,
-                               laporan_terenkripsi=enc_kronologi,
+                               laporan_terenkripsi=enc_kronologi)
     
     return render_template('form.html')
 
