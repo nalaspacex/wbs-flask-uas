@@ -72,7 +72,7 @@ def index():
                                nim_asli=nim_asli,
                                nim_terenkripsi=enc_nim,
                                laporan_asli=kronologi_asli,
-                               laporan_terenkripsi=enc_kronologi,
+                               laporan_terenkripsi=enc_kronologi)
     
     return render_template('form.html')
 
