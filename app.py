@@ -82,14 +82,11 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        
         if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
             session['admin_logged_in'] = True
             return redirect(url_for('dashboard'))
-        else:
-            flash("Username atau Password Salah!")
-            return redirect(url_for('login'))
-            
+        flash("Username atau Password Salah!")
+        return redirect(url_for('login'))
     return render_template('login.html')
 
 # 3. HALAMAN DASHBOARD RIWAYAT (HANYA UNTUK ADMIN TEROTENTIKASI)
